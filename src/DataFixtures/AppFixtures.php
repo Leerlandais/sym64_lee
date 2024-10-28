@@ -119,6 +119,29 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
+        // Then create all the articles
+        for ($i = 1; $i < 161; $i++){
+            $article = new Article();
+            $article->setUserId(array_rand($this->admins));
+            $title = $this->createTitle();
+            $article->setTitle($title);
+            $article->setTitleSlug($slugify->slugify($title));
+            $text = $this->createText();
+            $article->setText($text);
+            $dateCreate = $this->faker->dateTimeThisDecade();
+            $article->setArticleDateCreated($dateCreate);
+            $isPub = mt_rand(0,4);
+            $article->setPublished($isPub);
+            if ($isPub){
+                $datePub = $this->createPubDate($dateCreate);
+                $article->setArticleDatePosted($datePub);
+            }
+            $articles[] = $article;
+            $manager->persist($article);
+        }
+
+
+
 
 
         $manager->flush();

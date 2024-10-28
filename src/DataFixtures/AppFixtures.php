@@ -18,10 +18,21 @@ use DateTime;
 
 class AppFixtures extends Fixture
 {
+
+    private $faker;
+
+    public function __construct(UserPasswordHasherInterface $userPasswordHasher){
+        $this->hasher = $userPasswordHasher;
+        $this->faker = Faker::create('en_IE');
+    }
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
+        $slugify = new Slugify();
+        // declaring these here rather than inside the loops as they will be needed for the relations
+        $articles = [];
+        $sections = [];
+
+        
 
         $manager->flush();
     }

@@ -25,6 +25,15 @@ class AppFixtures extends Fixture
         $this->hasher = $userPasswordHasher;
         $this->faker = Faker::create('en_IE');
     }
+
+
+    private function createTitle($min = 1, $max = 5)
+    {
+        $nbWords = mt_rand($min,$max);
+        $title = $this->faker->words($nbWords);
+        return implode(" ", $title);
+
+    }
     public function load(ObjectManager $manager): void
     {
         $slugify = new Slugify();
@@ -96,6 +105,8 @@ class AppFixtures extends Fixture
             $users[] = $user;
             $manager->persist($user);
         }
+
+
 
         $manager->flush();
     }

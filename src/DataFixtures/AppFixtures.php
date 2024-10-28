@@ -34,6 +34,19 @@ class AppFixtures extends Fixture
         return implode(" ", $title);
 
     }
+
+    private function createText($min = 5, $max = 10)
+    {
+        $nbPara = mt_rand($min, $max);
+        $texts = $this->faker->paragraphs($nbPara);
+        return implode("\n", $texts);
+    }
+
+    private function createPubDate($maxDate): DateTime
+    {
+        return $this->faker->dateTimeBetween($maxDate,(clone $maxDate)->modify('+3 months'));
+    }
+
     public function load(ObjectManager $manager): void
     {
         $slugify = new Slugify();

@@ -18,14 +18,13 @@ use DateTime;
 
 class AppFixtures extends Fixture
 {
-
     private $faker;
+
 
     public function __construct(UserPasswordHasherInterface $userPasswordHasher){
         $this->hasher = $userPasswordHasher;
         $this->faker = Faker::create('en_IE');
     }
-
 
     private function createTitle($min = 1, $max = 5)
     {
@@ -53,6 +52,7 @@ class AppFixtures extends Fixture
         // declaring these here rather than inside the loops as they will be needed for the relations
         $articles = [];
         $sections = [];
+        $admins = [];
 
         // Start by creating the different user types
         // create me...
@@ -74,7 +74,7 @@ class AppFixtures extends Fixture
 
         $admin->setUsername('admin');
         $admin->setRoles(['ROLE_ADMIN', 'ROLE_REDAC', 'ROLE_USER']);
-        $admin->setEmail($this->faker->email);
+        $admin->setEmail('admin@admin.com');
         $admin->setFullName("Admin");
         $admin->setActivate(true);
         $admin->setUniqid(uniqid('user_', true));
@@ -84,7 +84,6 @@ class AppFixtures extends Fixture
         $this->admins[2] = $admin;
 
         $manager->persist($admin);
-
 
         for($i = 3; $i < 8; $i++){
             // create the 5 Editors
@@ -100,8 +99,8 @@ class AppFixtures extends Fixture
 
             $this->admins[$i] = $redac;
             $manager->persist($redac);
-            // Gotta love PHPStorm - Other than typing 'for', I let it autofill the rest :-D
         }
+
 
         for($i = 1; $i < 25; $i++){
             // create the users
@@ -118,11 +117,11 @@ class AppFixtures extends Fixture
             $users[] = $user;
             $manager->persist($user);
         }
-
         // Then create all the articles
-        for ($i = 1; $i < 161; $i++){
+        for ($i = 1; $i < 161; $i++) {
             $article = new Article();
-            $article->setUserId(array_rand($this->admins));
+            $randomUserId = array_rand($this->admins);
+            $article->setUser($this->admins[$randomUserId]);
             $title = $this->createTitle();
             $article->setTitle($title);
             $article->setTitleSlug($slugify->slugify($title));
@@ -130,9 +129,9 @@ class AppFixtures extends Fixture
             $article->setText($text);
             $dateCreate = $this->faker->dateTimeThisDecade();
             $article->setArticleDateCreated($dateCreate);
-            $isPub = mt_rand(0,4);
+            $isPub = mt_rand(0, 4);
             $article->setPublished($isPub);
-            if ($isPub){
+            if ($isPub) {
                 $datePub = $this->createPubDate($dateCreate);
                 $article->setArticleDatePosted($datePub);
             }
@@ -140,10 +139,30 @@ class AppFixtures extends Fixture
             $manager->persist($article);
         }
 
+        // Now create the 6 sections
+        for ($i = 1; $i < 7; $i++){
+            $section = new Section();
+            $title = $this->createTitle(1,3);
+            $section->setSectionTitle($title);
+            $section->setSectionSlug($slugify->slugify($title));
+            $detail = $this->createText(1,1);
+            $section->setSectionDetail($detail);
+            // and link them to the articles randomly
+            $nbArt = mt_rand(20, 40);
+            shuffle($articles);
+            // There are many methods to do this but I like this cos it makes sure the random articles are unique
+            // (meaning the if(!$this) in addArticle may be redundant)
+            $randArts = array_slice($articles, 0, $nbArt);
 
+            foreach ($randArts as $art) {
+                $section->addArticle($art);
+            }
 
-
+            $manager->persist($section);
+        }
 
         $manager->flush();
     }
+
 }
+

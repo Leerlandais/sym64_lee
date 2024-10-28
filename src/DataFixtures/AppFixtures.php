@@ -47,7 +47,21 @@ class AppFixtures extends Fixture
         // ... and save me
         $manager->persist($super);
 
+        // create the admin
+        $admin = new User();
 
+        $admin->setUsername('admin');
+        $admin->setRoles(['ROLE_ADMIN', 'ROLE_REDAC', 'ROLE_USER']);
+        $admin->setEmail($this->faker->email);
+        $admin->setFullName("Admin");
+        $admin->setActivate(true);
+        $admin->setUniqid(uniqid('user_', true));
+        $pwdHash = $this->hasher->hashPassword($admin, 'admin');
+        $admin->setPassword($pwdHash);
+
+        $this->admins[2] = $admin;
+
+        $manager->persist($admin);
 
         $manager->flush();
     }

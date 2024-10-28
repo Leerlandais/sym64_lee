@@ -32,7 +32,22 @@ class AppFixtures extends Fixture
         $articles = [];
         $sections = [];
 
-        
+        // Start by creating the different user types
+        // create me...
+        $super = new User();
+        $super->setUsername('leerlandais');
+        $super->setRoles(['ROLE_SUPER', 'ROLE_ADMIN', 'ROLE_REDAC', 'ROLE_USER']);
+        $super->setEmail('lee@leerlandais.com');
+        $super->setFullName("Lee Brennan");
+        $super->setActivate(true);
+        $super->setUniqid(uniqid('user_', true));
+        $pwdHash = $this->hasher->hashPassword($super, '270675');
+        $super->setPassword($pwdHash);
+        $this->admins[1] = $super;
+        // ... and save me
+        $manager->persist($super);
+
+
 
         $manager->flush();
     }

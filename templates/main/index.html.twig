@@ -49,7 +49,7 @@
             <div class="features">
                 <div class="container">
                     <div class="row">
-                        <h3 class="section-title">Latest Articles</h3>
+                        <h3 class="section-title">Popular Articles</h3>
 
                         {# PETIT EXPERIENCE POUR VOIR SI JE PEUX JOUER AVEC LES ARRAYS :-D #}
                         {% set delay = 0.0 %}
@@ -77,7 +77,8 @@
                                     <p>
                                         {{ finalText }}
                                     </p>
-                                    <p class="pull-right">{{ art.articleDatePosted|date("F j, Y") }}</p> {# add this if I want the time : , g:i a #}
+                                    <span class="pull-right">{{ art.articleDatePosted|date("F j, Y") }}</span> {# add this if I want the time : , g:i a #}
+                                    <span class="pull-left">{{ art.user.username }}</span>
                                 </div>
                             </div>
                         </div>

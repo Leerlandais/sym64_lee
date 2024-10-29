@@ -30,4 +30,21 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getArticlesBySectionId(string $selectId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.sections', 's')
+            ->addSelect('s')
+            ->where('p.published = :published')
+            ->setParameter('published', true)
+            ->andWhere('s.id = :id')
+            ->setParameter('id', $selectId)
+
+
+            ->getQuery()
+            ->getResult();
+    }
+
+
 }

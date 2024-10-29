@@ -158,13 +158,11 @@
                                         <div class="col-md-3 col-sm-6 search-col">
                                             <div class="input-group-addon search-category-container">
                                                 <label class="styled-select location-select">
-                                                    <select class="dropdown-product selectpicker" name="product-cat" >
-
+                                                    <select class="dropdown-product selectpicker" name="product-cat" onchange="location = this.value;">
                                                         <option value="0">All Tags</option>
-                                                    {% for tag in tags %}
-                                                        <option value="{{ tag.tagName }}">{{ tag.tagName | capitalize }}</option>
--                                                   {% endfor %}
-
+                                                        {% for tag in tags %}
+                                                            <option class="subitem" value="{{ path('public_tag', {slug: tag.tagSlug}) }}">{{ tag.tagName | capitalize }}</option>
+                                                        {% endfor %}
 
                                                     </select>
                                                 </label>

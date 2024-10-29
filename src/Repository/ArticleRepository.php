@@ -46,5 +46,20 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getArticlesByTagSlug(string $tagSlug): array
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.tags', 't')
+            ->addSelect('t')
+            ->where('p.published = :published')
+            ->setParameter('published', true)
+            ->andWhere('t.tag_slug = :slug')
+            ->setParameter('slug', $tagSlug)
+
+
+            ->getQuery()
+            ->getResult();
+    }
+
 
 }

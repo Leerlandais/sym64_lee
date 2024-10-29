@@ -52,7 +52,24 @@ class MainController extends AbstractController
         ]);
     }
 
+    #[Route('/tag/{slug}', name: 'public_tag', methods: ['GET'])]
+    public function tag(EntityManagerInterface $entityManager, string $slug): Response
+    {
+        $arts = $entityManager->getRepository(Article::class)->getArticlesByTagSlug($slug);
 
+
+        foreach ($arts as $art) {
+            foreach ($art->getTags() as $tag) {
+                $tag->getTagName();
+            }
+        }
+
+
+        return $this->render('main/tag.html.twig', [
+            'arts' => $arts,
+            'tag' => $tag,
+        ]);
+    }
 
 
 }

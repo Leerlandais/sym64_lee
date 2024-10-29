@@ -8,9 +8,9 @@
                         <div class="col-md-12 wow fadeIn" data-wow-delay="0.5s">
                             <h3 class="section-title">Featured Articles</h3>
                             <div id="new-products" class="owl-carousel">
-
-                                {% set shuffleArts = arts|slice(0, 12) %}
-                                {% for art in shuffleArts %}
+                                {% set randArt = arts|shuffle %}
+                                {% set sliceArt = arts|slice(0, 12) %}
+                                {% for art in sliceArt %}
 
 
                                     {# If the text is longer than 250 chars, cut it #}

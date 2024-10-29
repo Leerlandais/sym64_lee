@@ -125,17 +125,18 @@
                                         <div class="col-md-3 col-sm-6 search-col">
                                             <div class="input-group-addon search-category-container">
                                                 <label class="styled-select location-select">
-                                                    <select class="dropdown-product selectpicker" name="product-cat" >
-
-                                                        {# REPLACE THESE WITH A LOOP #}
-                                                        <option value="0">All Authors</option>
+                                                    <select class="dropdown-product selectpicker" name="product-cat" onchange="location = this.value;">
+                                                        <!-- Default option to show all authors -->
+                                                        <option value="?product-cat=0">All Authors</option>
 
                                                         {% for author in authors %}
                                                             {% if "ROLE_REDAC" in author.roles %}
-                                                            <option class="subitem" value="{{ author.username }}"> {{ author.username | capitalize }}</option>
+                                                                <!-- Redirects to the author-specific URL when selected -->
+                                                                <option class="subitem" value="{{ path('public_author', {id: author.id}) }}">{{ author.username | capitalize }}</option>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>
+
                                                 </label>
                                             </div>
                                         </div>

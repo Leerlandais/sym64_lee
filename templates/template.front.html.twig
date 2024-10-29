@@ -146,7 +146,7 @@
                                                         <select class="dropdown-product selectpicker" name="product-cat" onchange="location = this.value;">
                                                         <option value="0">All Categories</option>
                                                         {% for cat in cats %}
-                                                            <option class="subitem" value="{{ path('public_section', {id: cat.id}) }}">{{ cat.sectionTitle | capitalize }}</option>
+                                                            <option class="subitem" value="{{ path('public_section', {slug: cat.sectionSlug}) }}">{{ cat.sectionTitle | capitalize }}</option>
                                                         {% endfor %}
 
                                                     </select>

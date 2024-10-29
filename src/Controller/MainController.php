@@ -41,13 +41,18 @@ class MainController extends AbstractController
         ]);
     }
 
-    #[Route('/section/{id}', name: 'public_section', methods: ['GET'])]
-    public function section(EntityManagerInterface $entityManager, int $id): Response
+    #[Route('/section/{slug}', name: 'public_section', methods: ['GET'])]
+    public function section(EntityManagerInterface $entityManager, string $slug): Response
     {
-        $arts = $entityManager->getRepository(Article::class)->getArticlesBySectionId($id);
-        $section = $entityManager->getRepository(Section::class)->find($id);
+        $arts = $entityManager->getRepository(Article::class)->getArticlesBySectionSlug($slug);
+        foreach ($arts as $art) {
+            foreach ($art->getSections() as $sect) {
+                $sect->getSectionTitle();
+            }
+        }
+
         return $this->render('main/section.html.twig', [
-            'section' => $section,
+            'section' => $sect,
             'arts' => $arts,
         ]);
     }
@@ -57,13 +62,11 @@ class MainController extends AbstractController
     {
         $arts = $entityManager->getRepository(Article::class)->getArticlesByTagSlug($slug);
 
-
         foreach ($arts as $art) {
             foreach ($art->getTags() as $tag) {
                 $tag->getTagName();
             }
         }
-
 
         return $this->render('main/tag.html.twig', [
             'arts' => $arts,

@@ -16,7 +16,7 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    public function getArticlesByAuthorId(string $authorId): array
+    public function getArticlesByAuthorId(int $authorId): array
     {
         return $this->createQueryBuilder('p')
             ->leftJoin('p.user', 'u')
@@ -31,15 +31,15 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getArticlesBySectionId(string $selectId): array
+    public function getArticlesBySectionSlug(string $slug): array
     {
         return $this->createQueryBuilder('p')
             ->leftJoin('p.sections', 's')
             ->addSelect('s')
             ->where('p.published = :published')
             ->setParameter('published', true)
-            ->andWhere('s.id = :id')
-            ->setParameter('id', $selectId)
+            ->andWhere('s.section_slug = :slug')
+            ->setParameter('slug', $slug)
 
 
             ->getQuery()

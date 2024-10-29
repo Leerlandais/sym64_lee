@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Section;
+use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,10 +21,12 @@ class MainController extends AbstractController
         $authors = $entityManager->getRepository(User::class)->findAll();
         $categs = $entityManager->getRepository(Section::class)->findAll();
         $arts = $entityManager->getRepository(Article::class)->findAll();
+        $tags = $entityManager->getRepository(Tag::class)->findAll();
         return $this->render('main/index.html.twig', [
             'authors' => $authors,
             'cats' => $categs,
             'arts' => $arts,
+            'tags' => $tags,
         ]);
     }
 }

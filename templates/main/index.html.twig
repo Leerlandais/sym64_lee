@@ -6,104 +6,35 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 wow fadeIn" data-wow-delay="0.5s">
-                            <h3 class="section-title">Featured Listings</h3>
+                            <h3 class="section-title">Featured Articles</h3>
                             <div id="new-products" class="owl-carousel">
+
+                                {% set shuffleArts = arts|slice(0, 12) %}
+                                {% for art in shuffleArts %}
+
+
+                                    {# If the text is longer than 250 chars, cut it #}
+                                    {% set truncateText = art.text|length > 250 ? art.text|slice(0, 250) : art.text %}
+                                    {# Then find the last ' ' in the cut the rest off #}
+                                    {% set lastSpace = truncateText|split(' ')|length - 1 %}
+                                    {% set truncatedWords = truncateText|split(' ')|slice(0, lastSpace)|join(' ') %}
+
+                                    {% set finalText = truncatedWords ~ '...' %}
+
                                 <div class="item">
                                     <div class="product-item">
                                         <div class="carousel-thumb">
-                                            <img src="{{ asset('img/product/img1.jpg') }}" alt="">
+                                            <p>{{ finalText }}</p>
                                             <div class="overlay">
                                                 <a href="#"><i class="fa fa-link"></i></a>
                                             </div>
                                         </div>
-                                        <a href="#" class="item-name">Lorem ipsum dolor sit</a>
-                                        <span class="price">$150</span>
+                                        <a href="#" class="item-name"><strong>{{ art.title }}</strong></a>
+                                        <span class="price">{{ art.user.username }}</span>
                                     </div>
                                 </div>
-                                <div class="item">
-                                    <div class="product-item">
-                                        <div class="carousel-thumb">
-                                            <img src="{{ asset('img/product/img2.jpg') }}" alt="">
-                                            <div class="overlay">
-                                                <a href="#"><i class="fa fa-link"></i></a>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="item-name">Sed diam nonummy</a>
-                                        <span class="price">$67</span>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="product-item">
-                                        <div class="carousel-thumb">
-                                            <img src="{{ asset('img/product/img3.jpg') }}" alt="">
-                                            <div class="overlay">
-                                                <a href="#"><i class="fa fa-link"></i></a>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="item-name">Feugiat nulla facilisis</a>
-                                        <span class="price">$300</span>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="product-item">
-                                        <div class="carousel-thumb">
-                                            <img src="{{ asset('img/product/img4.jpg') }}" alt="">
-                                            <div class="overlay">
-                                                <a href="#"><i class="fa fa-link"></i></a>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="item-name">Lorem ipsum dolor sit</a>
-                                        <span class="price">$149</span>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="product-item">
-                                        <div class="carousel-thumb">
-                                            <img src="{{ asset('img/product/img5.jpg') }}" alt="">
-                                            <div class="overlay">
-                                                <a href="#"><i class="fa fa-link"></i></a>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="item-name">Sed diam nonummy</a>
-                                        <span class="price">$90</span>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="product-item">
-                                        <div class="carousel-thumb">
-                                            <img src="{{ asset('img/product/img6.jpg') }}" alt="">
-                                            <div class="overlay">
-                                                <a href="#"><i class="fa fa-link"></i></a>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="item-name">Praesent luptatum zzril</a>
-                                        <span class="price">$169</span>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="product-item">
-                                        <div class="carousel-thumb">
-                                            <img src="{{ asset('img/product/img7.jpg') }}" alt="">
-                                            <div class="overlay">
-                                                <a href="#"><i class="fa fa-link"></i></a>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="item-name">Lorem ipsum dolor sit</a>
-                                        <span class="price">$79</span>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="product-item">
-                                        <div class="carousel-thumb">
-                                            <img src="{{ asset('img/product/img8.jpg') }}" alt="">
-                                            <div class="overlay">
-                                                <a href="#"><i class="fa fa-link"></i></a>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="item-name">Sed diam nonummy</a>
-                                        <span class="price">$149</span>
-                                    </div>
-                                </div>
+
+                                {% endfor %}
                             </div>
                         </div>
                     </div>

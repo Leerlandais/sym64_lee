@@ -92,26 +92,9 @@
             </div>
             <h3 class="title-menu">All Pages</h3>
             <ul class="nav navmenu-nav"> <!--- Menu -->
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index-v-2.html">Home Page V2</a></li>
-                <li><a href="about.html">About us</a></li>
-                <li><a href="category.html">Category</a></li>
-                <li><a href="ads-details.html">Ads details</a></li>
-                <li><a href="pricing.html">Pricing Tables</a></li>
-                <li><a href="account-archived-ads.html">Account archived</a></li>
-                <li><a href="account-close.html">Account-close</a></li>
-                <li><a href="account-favourite-ads.html">Favourite ads</a></li>
-                <li><a href="account-home.html">Account home</a></li>
-                <li><a href="account-myads.html">Account myads</a></li>
-                <li><a href="account-pending-approval-ads.html">pending approval</a></li>
-                <li><a href="account-saved-search.html">saved search</a></li>
-                <li><a href="post-ads.html">Post ads</a></li>
-                <li><a href="posting-success.html">Posting-success</a></li>
-                <li><a href="blog.html">Blogs</a></li>
-                <li><a href="blog-details.html">Blog Details</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="forgot-password.html">Forgot-password</a></li>
-                <li><a href="faq.html">Faq</a></li>
+                {% for art in arts %}
+                <li><a href="index.html">{{ art.title | capitalize }}</a></li>
+                {% endfor %}
                 <li><a href="{{ path('app_user_new') }}">Signup</a></li>
             </ul><!--- End Menu -->
         </div> <!--- End Off Canvas Side Menu -->
@@ -197,11 +180,10 @@
                                                         {# REPLACE THESE TOO #}
 
                                                         <option value="0">All Articles</option>
-                                                        {#
+
                                                     {% for art in arts %}
                                                         <option value="{{ art.title }}">{{ art.title | capitalize }}</option>
                                                     {% endfor %}
-                                                        #}
                                                     </select>
                                                 </label>
                                             </div>

@@ -37,15 +37,15 @@ class Article
     #[ORM\Column]
     private ?bool $published = null;
 
+    #[ORM\ManyToOne(inversedBy: 'articles')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     /**
      * @var Collection<int, Section>
      */
     #[ORM\ManyToMany(targetEntity: Section::class, inversedBy: 'articles')]
     private Collection $sections;
-
-    #[ORM\ManyToOne(inversedBy: 'articles')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
 
     public function __construct()
     {
@@ -141,6 +141,18 @@ class Article
         return $this;
     }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Section>
      */
@@ -161,18 +173,6 @@ class Article
     public function removeSection(Section $section): static
     {
         $this->sections->removeElement($section);
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
 
         return $this;
     }

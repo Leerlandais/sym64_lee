@@ -61,5 +61,18 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getArticlesByTitleSlug(string $artSlug): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.published = :published')
+            ->setParameter('published', true)
+            ->andWhere('p.title_slug = :slug')
+            ->setParameter('slug', $artSlug)
+
+
+            ->getQuery()
+            ->getResult();
+    }
+
 
 }

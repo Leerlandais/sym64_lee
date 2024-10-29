@@ -74,5 +74,16 @@ class MainController extends AbstractController
         ]);
     }
 
+    #[Route('/art/{slug}', name: 'public_article', methods: ['GET'])]
+    public function article(EntityManagerInterface $entityManager, string $slug): Response
+    {
+        $article = $entityManager->getRepository(Article::class)->getArticlesByTitleSlug($slug);
+        $arts = $entityManager->getRepository(Article::class)->findAll();
+
+        return $this->render('main/article.html.twig', [
+            'article' => $article,
+            'arts' => $arts,
+        ]);
+    }
 
 }

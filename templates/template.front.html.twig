@@ -171,13 +171,13 @@
                                         <div class="col-md-3 col-sm-6 search-col">
                                             <div class="input-group-addon search-category-container">
                                                 <label class="styled-select location-select">
-                                                    <select class="dropdown-product selectpicker" name="product-cat" >
+                                                    <select class="dropdown-product selectpicker" name="product-cat" onchange="location = this.value;">
 
 
                                                         <option value="0">All Articles</option>
 
                                                         {% for art in arts %}
-                                                            <option value="{{ art.title }}">{{ art.title | capitalize }}</option>
+                                                            <option class="subitem" value="{{ path('public_article', {slug: art.titleSlug}) }}">{{ art.title | capitalize }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </label>

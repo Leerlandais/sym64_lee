@@ -73,7 +73,7 @@
                                         {% set truncatedWords = truncateText|split(' ')|slice(0, lastSpace)|join(' ') %}
                                         {% set finalText = truncatedWords ~ '...' %}
 
-                                        <p>{{ finalText }}</p>
+                                        <a href="{{ path('public_article', {slug: art.titleSlug}) }}"><p>{{ finalText }}</p></a>
                                         <span class="pull-right">{{ art.articleDatePosted|date("F j, Y") }}</span>
                                         <a href="{{ path('public_author', {id: art.user.id}) }}" class="pull-left">{{ art.user.username }}</a>
                                     </div>

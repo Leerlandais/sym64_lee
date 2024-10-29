@@ -29,4 +29,15 @@ class MainController extends AbstractController
             'tags' => $tags,
         ]);
     }
+
+    #[Route('/author/{id}', name: 'public_author', methods: ['GET'])]
+    public function author(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $arts = $entityManager->getRepository(Article::class)->findAll();
+        $author = $entityManager->getRepository(User::class)->find($id);
+        return $this->render('main/author.html.twig', [
+            'author' => $author,
+            'arts' => $arts,
+        ]);
+    }
 }

@@ -92,9 +92,11 @@
             </div>
             <h3 class="title-menu">All Pages</h3>
             <ul class="nav navmenu-nav"> <!--- Menu -->
+                {#
                 {% for art in arts %}
                 <li><a href="index.html">{{ art.title | capitalize }}</a></li>
                 {% endfor %}
+                #}
                 <li><a href="{{ path('app_user_new') }}">Signup</a></li>
             </ul><!--- End Menu -->
         </div> <!--- End Off Canvas Side Menu -->

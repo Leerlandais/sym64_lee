@@ -7,15 +7,17 @@
             </li>
             {% if is_granted('ROLE_ADMIN') %}
                 <li>
-                    <a class="nav-link hover:text-gray-200 hover:underline text-center px-4" href="{{ path('public_home') }}">Admin</a>
+                    <a class="nav-link hover:text-gray-200 hover:underline text-center px-4" href="{{ path('app_article_index') }}">Admin</a>
                 </li>
             {% endif %}
             {% if is_granted('ROLE_REDAC') %}
                 <li>
-                    <a class="nav-link hover:text-gray-200 hover:underline text-center px-4" href="{{ path('public_home') }}">Article Editor</a>
+                    <a class="nav-link hover:text-gray-200 hover:underline text-center px-4" href="{{ path('app_article_update', { author: app.user.id }) }}">Article Editor - {{ app.user.id }}</a>
                 </li>
+
+
                 <li class="postadd">
-                    <a class="btn btn-danger btn-post" href="#ads"><span class="fa fa-plus-circle"></span> Add an Article</a>
+                    <a class="btn btn-success btn-post" href=""><span class="fa fa-plus-circle"></span> Add an Article</a>
                 </li>
             {% endif %}
         {% else %}

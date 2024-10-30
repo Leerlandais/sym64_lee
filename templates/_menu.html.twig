@@ -11,13 +11,13 @@
                 </li>
             {% elseif is_granted('ROLE_REDAC') %}
                 <li>
-                    <a class="nav-link hover:text-gray-200 hover:underline text-center px-4" href="{{ path('app_article_update', { author: user }) }}">Article Editor - {{ user }}</a>
+                    <a class="nav-link hover:text-gray-200 hover:underline text-center px-4" href="{{ path('app_article_update', { author: user }) }}">Article Editor</a>
                 </li>
             {% endif %}
 
             {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_REDAC') %}
                 <li class="postadd">
-                    <a class="btn btn-success btn-post" href=""><span class="fa fa-plus-circle"></span> Add an Article</a>
+                    <a class="btn btn-success btn-post" href="{{ path("app_article_new") }}"><span class="fa fa-plus-circle"></span> Add an Article</a>
                 </li>
             {% endif %}
 

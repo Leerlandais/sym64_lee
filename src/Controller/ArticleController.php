@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
 
 #[Route('/article')]
 final class ArticleController extends AbstractController
@@ -18,9 +20,11 @@ final class ArticleController extends AbstractController
     public function index(ArticleRepository $articleRepository): Response
     {
 
-
+        $user = $this->getUser();
+        $userId = $user?->getId();
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->findAll(),
+            'user' => $userId
         ]);
     }
 
@@ -28,20 +32,17 @@ final class ArticleController extends AbstractController
     public function update(ArticleRepository $articleRepository,int  $author=null): Response
     {
         $user = $this->getUser();
-        if ($user) {
-            $userId = $user->getId();
-        }else {
-            $userId = null;
-        }
+        $userId = $user?->getId();
         if (!$author){
             return $this->render('article/index.html.twig', [
                 'articles' => $articleRepository->findAll(),
+                'user' => $userId
 
             ]);
         }
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->getAllArticlesByAuthorId($author),
-            'user' => $userId,
+            'user' => $userId
         ]);
     }
 
@@ -49,14 +50,25 @@ final class ArticleController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
+        $user = $this->getUser();
+        $userId = $user?->getId(); // Ooh, nice trick by PHPStorm - turned my if/else into this :)
+
+
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $article->setArticleDateCreated(new \DateTime());
+            $article->setUser($user);
+            $title = $article->getTitle();
+            $slug = Slugify::create()->slugify($title);
+            $article->setTitleSlug($slug);
             $entityManager->persist($article);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_article_index', [
+                "user" => $userId,
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('article/new.html.twig', [

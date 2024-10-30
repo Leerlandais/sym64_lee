@@ -54,6 +54,7 @@
 {% include '_menu.html.twig' %}
             </div>
         </nav>
+        {% block sideNav %}
         <!-- Off Canvas Navigation -->
         <div class="navmenu navmenu-default navmenu-fixed-left offcanvas">
             <!--- Off Canvas Side Menu -->
@@ -73,6 +74,7 @@
         <div class="tbtn wow pulse" id="menu" data-wow-iteration="infinite" data-wow-duration="500ms" data-toggle="offcanvas" data-target=".navmenu">
             <p><i class="fa fa-file-text-o"></i> All Pages</p>
         </div>
+        {% endblock %}
     </div>
     <!-- Header Section End -->
 {% endblock %}{# end header #}

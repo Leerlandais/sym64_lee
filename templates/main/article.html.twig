@@ -35,7 +35,7 @@
                             </div>
                             <div class="features-content">
                                 <h4>
-                                    {{ art.title | capitalize }} <span class="pull-right fa fa-user"> </span><span class="pull-right"> <a href="{{ path('public_author', { id: art.user.id }) }}"> {{ art.user.username }}</a></span>
+                                    {{ art.title | capitalize }} <span class="pull-right fa fa-user"> </span><span class="pull-right"> <a href="{{ path('public_author', { id: art.user.id }) }}"> {{ art.user.fullname }}</a></span>
                                 </h4>
                                 <p>
                                     {{ art.text }}

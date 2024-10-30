@@ -104,7 +104,7 @@
                                                         {% for author in authors %}
                                                             {% if "ROLE_REDAC" in author.roles %}
                                                                 <!-- Redirects to the author-specific URL when selected -->
-                                                                <option class="subitem" value="{{ path('public_author', {id: author.id}) }}">{{ author.username | capitalize }}</option>
+                                                                <option class="subitem" value="{{ path('public_author', {id: author.id}) }}">{{ author.fullname | capitalize }}</option>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>

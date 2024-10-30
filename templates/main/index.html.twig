@@ -28,7 +28,7 @@
                                             </div>
                                         </div>
                                         <a href="{{ path('public_article', {slug: art.titleSlug}) }}" class="item-name"><strong>{{ art.title }}</strong></a>
-                                        <span class="price"><a href="{{ path("public_author", {id: art.user.id}) }}">{{ art.user.username }}</a></span>
+                                        <span class="price"><a href="{{ path("public_author", {id: art.user.id}) }}">{{ art.user.fullname }}</a></span>
                                     </div>
                                 </div>
 
@@ -75,7 +75,7 @@
 
                                         <a href="{{ path('public_article', {slug: art.titleSlug}) }}"><p>{{ finalText }}</p></a>
                                         <span class="pull-right">{{ art.articleDatePosted|date("F j, Y") }}</span>
-                                        <a href="{{ path('public_author', {id: art.user.id}) }}" class="pull-left">{{ art.user.username }}</a>
+                                        <a href="{{ path('public_author', {id: art.user.id}) }}" class="pull-left">{{ art.user.fullname }}</a>
                                     </div>
                                 </div>
                             </div>

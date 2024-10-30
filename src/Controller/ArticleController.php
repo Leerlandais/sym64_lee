@@ -16,6 +16,11 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/article')]
 final class ArticleController extends AbstractController
 {
+
+    private function getMenu(EntityManagerInterface $em)
+    {
+        return $em->getRepository(Article::class)->findAll();
+    }
     #[Route(name: 'app_article_index', methods: ['GET'])]
     public function index(ArticleRepository $articleRepository): Response
     {
@@ -29,20 +34,24 @@ final class ArticleController extends AbstractController
     }
 
     #[Route('/update/{author}',name: 'app_article_update', methods: ['GET'])]
-    public function update(ArticleRepository $articleRepository,int  $author=null): Response
+    public function update(ArticleRepository $articleRepository,int  $author=null, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
         $userId = $user?->getId();
+        $menuArts = $entityManager->getRepository(Article::class)->findAll();
         if (!$author){
             return $this->render('article/index.html.twig', [
                 'articles' => $articleRepository->findAll(),
-                'user' => $userId
+                'user' => $userId,
+                'menuArts' => $menuArts,
 
             ]);
         }
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->getAllArticlesByAuthorId($author),
-            'user' => $userId
+            'user' => $userId,
+            'menuArts' => $menuArts,
+
         ]);
     }
 
@@ -52,7 +61,7 @@ final class ArticleController extends AbstractController
         $article = new Article();
         $user = $this->getUser();
         $userId = $user?->getId(); // Ooh, nice trick by PHPStorm - turned my if/else into this :)
-
+        $menuArts = $entityManager->getRepository(Article::class)->findAll();
 
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -68,12 +77,15 @@ final class ArticleController extends AbstractController
 
             return $this->redirectToRoute('app_article_index', [
                 "user" => $userId,
+                'menuArts' => $menuArts,
             ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('article/new.html.twig', [
             'article' => $article,
             'form' => $form,
+            'user' => $userId,
+            'menuArts' => $menuArts,
         ]);
     }
 
@@ -88,18 +100,23 @@ final class ArticleController extends AbstractController
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        $userId = $user?->getId();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_article_index', [
+                'user' => $userId,
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('article/edit.html.twig', [
             'article' => $article,
             'form' => $form,
+            'user' => $userId,
         ]);
     }
 

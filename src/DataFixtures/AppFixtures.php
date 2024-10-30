@@ -116,7 +116,7 @@ class AppFixtures extends Fixture
             $user->setUsername('user'.$i);
             $user->setRoles(['ROLE_USER']);
             $user->setEmail($this->faker->email);
-            $user->setFullName($this->faker->name());
+            $user->setFullName($this->createName());
             $user->setActivate(mt_rand(0,3)); // tidier way to get 1 false in 4, no need for an extra variable
             $user->setUniqid(uniqid('user_', true));
             $pwdHash = $this->hasher->hashPassword($user, 'user'.$i);

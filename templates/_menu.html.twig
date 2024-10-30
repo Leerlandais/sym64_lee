@@ -12,7 +12,7 @@
             {% endif %}
             {% if is_granted('ROLE_REDAC') %}
                 <li>
-                    <a class="nav-link hover:text-gray-200 hover:underline text-center px-4" href="{{ path('app_article_update', { author: app.user.id }) }}">Article Editor - {{ app.user.id }}</a>
+                    <a class="nav-link hover:text-gray-200 hover:underline text-center px-4" href="{{ path('app_article_update', { author: user }) }}">Article Editor - {{ user }}</a>
                 </li>
 
 

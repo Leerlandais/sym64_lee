@@ -22,12 +22,20 @@ class MainController extends AbstractController
         $categs = $entityManager->getRepository(Section::class)->findAll();
         $arts = $entityManager->getRepository(Article::class)->findAll();
         $tags = $entityManager->getRepository(Tag::class)->findAll();
+        $user = $this->getUser();
+        if ($user) {
+            $userId = $user->getId();
+        }else {
+            $userId = null;
+        }
+
         return $this->render('main/index.html.twig', [
             'authors' => $authors,
             'cats' => $categs,
             'arts' => $arts,
             'menuArts'=> $arts,
             'tags' => $tags,
+            'user' => $userId,
         ]);
     }
 

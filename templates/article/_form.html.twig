@@ -26,8 +26,28 @@
                 'id': 'articlePublished',
                 'type': 'checkbox '}}) }}
     </div>
-    <button class="btn btn-success pull-left">{{ button_label|default('Save') }}</button>
-</form>
+    <div>
+        <label for="sections">Sections</label>
+
+        {{ form_widget(form.sections, {
+            'attr': {
+                'id': 'sections',
+                'class': 'input-group-button'
+            }
+        }) }}
+    </div>
+    <div>
+        <label for="tags">Tags</label>
+
+        {{ form_widget(form.tags, {
+            'attr': {
+                'id': 'tags',
+                'class': 'input-group-button'
+            }
+        }) }}
+    </div>
+    <button class="btn btn-success fea pull-left">{{ button_label|default('Save') }}</button>
+    </form>
     </div>
 </section>
 {{ form_end(form) }}

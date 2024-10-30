@@ -25,13 +25,19 @@ final class ArticleController extends AbstractController
     }
 
     #[Route('/update/{author}',name: 'app_article_update', methods: ['GET'])]
-    public function update(ArticleRepository $articleRepository,int  $author): Response
+    public function update(ArticleRepository $articleRepository,int  $author=null): Response
     {
         $user = $this->getUser();
         if ($user) {
             $userId = $user->getId();
         }else {
             $userId = null;
+        }
+        if (!$author){
+            return $this->render('article/index.html.twig', [
+                'articles' => $articleRepository->findAll(),
+
+            ]);
         }
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->getAllArticlesByAuthorId($author),

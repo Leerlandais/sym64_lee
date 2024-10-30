@@ -16,30 +16,32 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('user_id')
+           // ->add('user_id')
             ->add('title')
-            ->add('title_slug')
+           // ->add('title_slug')
             ->add('text')
-            ->add('article_date_created', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('article_date_posted', null, [
-                'widget' => 'single_text',
-            ])
+           // ->add('article_date_created', null, [
+           //     'widget' => 'single_text',
+           // ])
+           // ->add('article_date_posted', null, [
+           //     'widget' => 'single_text',
+           // ])
             ->add('published')
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
+           // ->add('user', EntityType::class, [
+           //     'class' => User::class,
+           //     'choice_label' => 'id',
+           // ])
             ->add('sections', EntityType::class, [
                 'class' => Section::class,
-                'choice_label' => 'id',
+                'choice_label' => 'sectionTitle',
                 'multiple' => true,
+                'expanded' => true,
             ])
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
-                'choice_label' => 'id',
+                'choice_label' => 'tagName',
                 'multiple' => true,
+                'expanded' => true,
             ])
         ;
     }

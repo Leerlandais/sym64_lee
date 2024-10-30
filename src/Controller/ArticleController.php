@@ -34,7 +34,7 @@ final class ArticleController extends AbstractController
             $userId = null;
         }
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->getArticlesByAuthorId($author),
+            'articles' => $articleRepository->getAllArticlesByAuthorId($author),
             'user' => $userId,
         ]);
     }

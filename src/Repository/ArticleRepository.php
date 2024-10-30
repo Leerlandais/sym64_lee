@@ -31,6 +31,19 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getAllArticlesByAuthorId(int $authorId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.user', 'u')
+            ->addSelect('u')
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $authorId)
+
+
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getArticlesBySectionSlug(string $slug): array
     {
         return $this->createQueryBuilder('p')

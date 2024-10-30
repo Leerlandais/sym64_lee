@@ -7,7 +7,7 @@
             </li>
             {% if is_granted('ROLE_ADMIN') %}
                 <li>
-                    <a class="nav-link hover:text-gray-200 hover:underline text-center px-4" href="{{ path('app_article_update', { author: null }) }}">Admin</a>
+                    <a class="nav-link hover:text-gray-200 hover:underline text-center px-4" href="{{ path('app_article_update', { author: user }) }}">Admin</a>
                 </li>
             {% elseif is_granted('ROLE_REDAC') %}
                 <li>

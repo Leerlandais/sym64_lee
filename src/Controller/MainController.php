@@ -42,6 +42,8 @@ class MainController extends AbstractController
     #[Route('/author/{id}', name: 'public_author', methods: ['GET'])]
     public function author(EntityManagerInterface $entityManager, int $id): Response
     {
+        $user = $this->getUser();
+        $userId = $user?->getId();
         $arts = $entityManager->getRepository(Article::class)->getArticlesByAuthorId($id);
         $author = $entityManager->getRepository(User::class)->find($id);
         $menuArts = $entityManager->getRepository(Article::class)->findAll();
@@ -49,6 +51,7 @@ class MainController extends AbstractController
             'author' => $author,
             'arts' => $arts,
             "menuArts" => $menuArts,
+            'user' => $userId,
         ]);
     }
 
@@ -57,6 +60,8 @@ class MainController extends AbstractController
     {
         $arts = $entityManager->getRepository(Article::class)->getArticlesBySectionSlug($slug);
         $menuArts = $entityManager->getRepository(Article::class)->findAll();
+        $user = $this->getUser();
+        $userId = $user?->getId();
         foreach ($arts as $art) {
             foreach ($art->getSections() as $sect) {
                 $sect->getSectionTitle();
@@ -67,6 +72,7 @@ class MainController extends AbstractController
             'section' => $sect,
             'arts' => $arts,
             "menuArts" => $menuArts,
+            'user' => $userId,
         ]);
     }
 
@@ -75,6 +81,8 @@ class MainController extends AbstractController
     {
         $arts = $entityManager->getRepository(Article::class)->getArticlesByTagSlug($slug);
         $menuArts = $entityManager->getRepository(Article::class)->findAll();
+        $user = $this->getUser();
+        $userId = $user?->getId();
         foreach ($arts as $art) {
             foreach ($art->getTags() as $tag) {
                 $tag->getTagName();
@@ -85,6 +93,7 @@ class MainController extends AbstractController
             'arts' => $arts,
             'tag' => $tag,
             "menuArts" => $menuArts,
+            'user' => $userId,
         ]);
     }
 
@@ -93,11 +102,14 @@ class MainController extends AbstractController
     {
         $article = $entityManager->getRepository(Article::class)->getArticlesByTitleSlug($slug);
         $arts = $entityManager->getRepository(Article::class)->findAll();
+        $user = $this->getUser();
+        $userId = $user?->getId();
 
         return $this->render('main/article.html.twig', [
             'article' => $article,
             'arts' => $arts,
             'menuArts' => $arts,
+            'user' => $userId,
         ]);
     }
 

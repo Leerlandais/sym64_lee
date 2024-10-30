@@ -93,7 +93,7 @@
             <h3 class="title-menu">All Pages</h3>
             <ul class="nav navmenu-nav"> <!--- Menu -->
 
-                {% for art in arts %}
+                {% for art in menuArts %}
                 <li><a href="{{ path('public_article', {slug: art.titleSlug}) }}">{{ art.title | capitalize }}</a></li>
                 {% endfor %}
 

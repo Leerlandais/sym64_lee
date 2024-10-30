@@ -1,12 +1,12 @@
 {% extends 'template.front.html.twig' %}
 
 {% block title %}Edit Article{% endblock %}
-
-{% block featured %}{% endblock %}
+{% block services %}{% endblock %}
 {% block intro %}{% endblock %}
 {% block sideNav %}{% endblock %}
-{% block services %}
 
+{% block featured %}
+    <h1 class="center">Edit Article</h1>
 
     {{ include('article/_form.html.twig', {'button_label': 'Update'}) }}
 

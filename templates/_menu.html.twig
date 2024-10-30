@@ -14,6 +14,9 @@
                 <li>
                     <a class="nav-link hover:text-gray-200 hover:underline text-center px-4" href="{{ path('public_home') }}">Article Editor</a>
                 </li>
+                <li class="postadd">
+                    <a class="btn btn-danger btn-post" href="#ads"><span class="fa fa-plus-circle"></span> Add an Article</a>
+                </li>
             {% endif %}
         {% else %}
             <li class="nav-item">
@@ -22,10 +25,10 @@
             <li>
                 <a href="{{ path('app_user_new') }}" class="hover:text-gray-200 hover:underline text-center px-4"><i class="lnr lnr-user"></i> Signup</a>
             </li>
-        {% endif %}
         <li class="postadd">
             <a class="btn btn-danger btn-post" href="#ads"><span class="fa fa-plus-circle"></span> Post an Ad</a>
         </li>
+        {% endif %}
     </ul>
 </div>
 <!-- Navbar End -->

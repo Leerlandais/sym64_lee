@@ -44,7 +44,9 @@
                                 {% if is_granted("ROLE_ADMIN") %}
                                     <button class="pull-left"><a href="{{ path('app_article_edit', {'id': art.id}) }}">Edit</a></button>
                                     {% else %}
-                                        <button class="pull-left"><a href="{{ path('app_article_edit', {'id': art.id}) }}">Edit</a></button>
+                                        {% if is_granted("ROLE_USER") %}
+                                        <button class="pull-left"><a href="{{ path('app_article_edit', {'id': art.id}) }}">Comment</a></button>
+                                            {% endif %}
                                 {% endif %}
                             </div>
                         </div>
